@@ -45,17 +45,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				
 			} catch (Exception e) {
 				System.out.println("JWT 인증 실패 :" + e.getMessage());
-			}
-			
-			//요청 → 인증 정보 확인 → 컨트롤러 전달 or 다음 필터 
-			filterChain.doFilter(request, response);
-			
-			
+			}			
 			
 		}
 		
+		
+		//요청 → 인증 정보 확인 → 컨트롤러 전달 or 다음 필터 
+		filterChain.doFilter(request, response);
+		
+		
 	}
-	
+	//request 객체 내의 헤더에서 token 추출
 	private String parseJwt(HttpServletRequest request) {
 		String headerAuth = request.getHeader("Authorization");
 		if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer")) {
