@@ -46,11 +46,13 @@ public class AuthController {
 	}
 	
 	//로그인
+	@PostMapping("/login")
 	public Map<String, String> login(@RequestBody Map<String, String> body){
 		String username = body.get("username");
 		String password = passwordEncoder.encode(body.get("password"));
 		
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		System.out.println("인증끝!");
 		String token = jwtUtil.generateToken(username); //토큰 생성
 		return Map.of("token",token);
 				
@@ -59,7 +61,7 @@ public class AuthController {
 	@GetMapping("/me")
 	public Map<String, String> me(@RequestHeader("Authorization") String authHeader){
 		
-		String token = authHeader.replace("Bearer", "");  //헤더에서 토큰 정보만 추출
+		String token = authHeader.replace("Bearer", " ");  //헤더에서 토큰 정보만 추출
 		String username = jwtUtil.extractUsername(token);
 		
 		return Map.of("username", username);
