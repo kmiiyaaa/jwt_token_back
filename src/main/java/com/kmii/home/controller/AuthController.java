@@ -47,9 +47,9 @@ public class AuthController {
 	
 	//로그인
 	@PostMapping("/login")
-	public Map<String, String> login(@RequestBody Map<String, String> body){
+	public Map<String, String> login(@RequestBody Map<String, String> body) {
 		String username = body.get("username");
-		String password = passwordEncoder.encode(body.get("password"));
+		String password = body.get("password");
 		
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		System.out.println("인증끝!");
